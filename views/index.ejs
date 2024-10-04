@@ -39,33 +39,34 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body >
+
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Logo or Brand Name -->
-            <div class="text-white text-lg">
+            <!-- -- Logo or Brand Name  -->
+            <div class="text-white text-lg ">
                 <p  class="font-bold" id="currentdate"></p>
-                <p class="text-xs" id="currenttime"></p>
+                <p  class="text-xs" id="currenttime"></p>
             </div>
     
-            <!-- Links (hidden on small screens, shown on large screens) -->
+             <!-- Links (hidden on small screens, shown on large screens) --> 
             <div class="hidden md:flex space-x-4">
                 <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
                 <a href="/about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
-                <a href="/contact" method="get" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                <a href="/contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
             </div>
     
-            <!-- Right Section: Login/Register Buttons -->
+            <!-- Right Section: Login/Register Buttons --> 
             <div class="hidden md:flex space-x-4">
-                <a href="/login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Login
-                </a>
-                <a href="/register" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                </button>
+                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     Register
-                </a>
+                </button>
             </div>
     
-            <!-- Mobile Menu Button (visible on small screens) -->
+             <!-- Mobile Menu Button (visible on small screens) --> 
             <div class="md:hidden">
                 <button class="text-gray-300 hover:text-white focus:outline-none" id="mobile-menu-button">
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,15 +75,15 @@
                 </button>
             </div>
         </div>
-    
-        <!-- Mobile Menu (hidden by default) -->
+        
+         <!-- Mobile Menu (hidden by default) --> 
         <div class="md:hidden flex text-center" id="mobile-menu" style="display: none;">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-large">Home</a>
-                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="/contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
-                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold  px-3 py-2 rounded-md text-base text-center">Login</button>
-                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold px-3 py-2 rounded-md text-base text-center">Register</button>
+            <div class="px-2 pt-2 pb-3 space-y-0.8 sm:px-3">
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-1.5 rounded-md text-base font-medium">Home</a>
+                <a href="/about" class="text-gray-300 hover:text-white block px-3 py-1.5 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="text-gray-300 mb-3 hover:text-white block px-3 py-1.5 rounded-md text-base font-medium">Contact</a>
+                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white  font-bold  px-3 py-2 rounded-md text-base ">Login</button>
+                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white   font-bold  px-3 py-2 rounded-md text-base ">Register</button>
             </div>
         </div>
     </nav>
@@ -164,6 +165,7 @@
             </div>
             <% } %>
     </div>
+   
     <script>
         function openPopupLogin() {
             document.getElementById("popupLogin").style.display = "flex";

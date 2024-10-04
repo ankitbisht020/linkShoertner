@@ -40,6 +40,8 @@
         
         .alert {
             transition: opacity 1s ease;
+            text-align: center;
+            font-weight: bold;
         }
         
     </style>
@@ -51,7 +53,7 @@
             <!-- -- Logo or Brand Name  -->
             <div class="text-white text-lg ">
                 <p  class="font-bold" id="currentdate"></p>
-                <p id="currenttime"></p>
+                <p  class="text-xs" id="currenttime"></p>
             </div>
     
              <!-- Links (hidden on small screens, shown on large screens) --> 
@@ -138,14 +140,20 @@
     </div>
     </div>
     <div class="container mx-auto ">
-        <% if (alertMessage) { %>
-            <div  id="alert" class=" p-4  bg-blue-200 text-blue-900 rounded">
-                <p class="text-center"><%= alertMessage %></p>
+        <% if (successMessage) { %>
+            <div id="alert" class=" bg-green-600 alert alert-success">
+                <p><%= successMessage %></p>
             </div>
         <% } %>
+        <% if (errorMessage) { %>
+            <div  id="alert" class="alert bg-red-600 alert-danger">
+                <p><%= errorMessage %></p>
+            </div>
+        <% } %>
+        
         <h1 class="text-3xl   mt-4 text-center font-bold mb-4">Contact Us</h1>
         <h1 class="text-md text-center  mb-4">Please provide us your contact details, So we will connect to you soon.</h1>
-        <div class="flex  justify-center">
+        <div class="flex   max-w-xl mx-auto rounded-lg p-3 justify-center shadow-lg">
         <form action="/usercontact" method="POST" class="space-y-4 w-72 ">
             <div>
                 <label for="name" class="block text-gray-700">Name:</label>

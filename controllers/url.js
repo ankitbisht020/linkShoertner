@@ -53,7 +53,8 @@ exports.redirectolink =async (req, res) => {
 }
 
 exports.contactpage=(req,res)=>{
-    res.render('contact',{alertMessage:null})
+    const alertMessage = req.query.alert || null;
+    res.render('contact',{alertMessage})
 }
 
 exports.usercontact= async(req,res)=>{
@@ -66,8 +67,9 @@ exports.usercontact= async(req,res)=>{
         { email }
     ]});
     if(usercontacts){
-        return res.render('contact', { alertMessage: 'You already submitted a request. We will contact you soon.', redirectURL: '/contact' });
-       
+      
+        req.flash('error', 'You have alreasy submitt a requst! Our team will contact you soon.');
+        return res.redirect('/contact');
 
     }else{
     try{
@@ -79,12 +81,17 @@ exports.usercontact= async(req,res)=>{
             message:message
         });
         
-        return res.render('contact', { alertMessage: 'Thank you for contacting us! Redirecting you...', redirectURL: '/' });
-        console.log("user created");
+        req.flash('success', 'Thank you for contacting us! Our team will contact you soon.');
+        return res.redirect('/contact');
+        
     }catch(error){
         res.send("some error occur at our side.");
     }
+}}
+
+exports.about = (req,res)=>{
+    res.render('about');
 }
-      
-}
+
+
 
