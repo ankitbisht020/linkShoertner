@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
-    <!-- Tailwind CSS CDN -->
+     <!-- Tailwind CSS CDN --> 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         
@@ -37,35 +37,41 @@
             right: 10px;
             cursor: pointer;
         }
+        
+        .alert {
+            transition: opacity 1s ease;
+        }
+        
     </style>
 </head>
 <body class="bg-gray-100">
+    <div>
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Logo or Brand Name -->
-            <div class="text-white text-lg">
+            <!-- -- Logo or Brand Name  -->
+            <div class="text-white text-lg ">
                 <p  class="font-bold" id="currentdate"></p>
-                <p class="text-xs" id="currenttime"></p>
+                <p id="currenttime"></p>
             </div>
     
-            <!-- Links (hidden on small screens, shown on large screens) -->
+             <!-- Links (hidden on small screens, shown on large screens) --> 
             <div class="hidden md:flex space-x-4">
                 <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
                 <a href="/about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
-                <a href="/contact" method="get" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                <a href="/contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
             </div>
     
-            <!-- Right Section: Login/Register Buttons -->
+            <!-- Right Section: Login/Register Buttons --> 
             <div class="hidden md:flex space-x-4">
-                <a href="/login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Login
-                </a>
-                <a href="/register" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                </button>
+                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     Register
-                </a>
+                </button>
             </div>
     
-            <!-- Mobile Menu Button (visible on small screens) -->
+             <!-- Mobile Menu Button (visible on small screens) --> 
             <div class="md:hidden">
                 <button class="text-gray-300 hover:text-white focus:outline-none" id="mobile-menu-button">
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,15 +80,15 @@
                 </button>
             </div>
         </div>
-    
-        <!-- Mobile Menu (hidden by default) -->
+        
+         <!-- Mobile Menu (hidden by default) --> 
         <div class="md:hidden flex text-center" id="mobile-menu" style="display: none;">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-large">Home</a>
-                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="/contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
-                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold  px-3 py-2 rounded-md text-base text-center">Login</button>
-                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold px-3 py-2 rounded-md text-base text-center">Register</button>
+            <div class="px-2 pt-2 pb-3 space-y-0.8 sm:px-3">
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-1.5 rounded-md text-base font-medium">Home</a>
+                <a href="/about" class="text-gray-300 hover:text-white block px-3 py-1.5 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="text-gray-300 mb-3 hover:text-white block px-3 py-1.5 rounded-md text-base font-medium">Contact</a>
+                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white  font-bold  px-3 py-2 rounded-md text-base ">Login</button>
+                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white   font-bold  px-3 py-2 rounded-md text-base ">Register</button>
             </div>
         </div>
     </nav>
@@ -131,39 +137,44 @@
         <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"> Already have a account</button>
     </div>
     </div>
-    <div class="container mx-auto p-6">
-        <!-- Header -->
-        <h1 class="text-4xl font-bold text-center text-gray-800 ">URL Shortener</h1>
-         
-
-        <!-- Form to Shorten URL -->
-        <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-            <form action="/shorten" method="POST">
-                <label for="url" class="block text-lg font-semibold mb-2 text-gray-700">Enter the URL to shorten:</label>
-                <input type="url" name="url" id="url" placeholder="https://example.com" required class="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-500 transition duration-300">
-                    Shorten URL
-                </button>
-            </form>
-        </div>
-
-        <!-- Display Shortened URL (conditionally rendered) -->
-        <% if (shortenedUrl) { %>
-            <div class="mt-10 text-center">
-                <p class="text-xl text-gray-800">Shortened URL:</p>
-                <div class="flex justify-center items-center mt-3">
-                    <a id="shortUrl" href="/goto/<%=shortUrlCode%>"  target="_blank" class="text-indigo-600 text-xl font-bold hover:underline">
-                        <%= shortenedUrl%>
-                    </a>
-                    <!-- Copy Button -->
-                    <button onclick="copyToClipboard()" class="ml-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-400 transition duration-300">
-                        Copy
-                    </button>
-                </div>
+    <div class="container mx-auto ">
+        <% if (alertMessage) { %>
+            <div  id="alert" class=" p-4  bg-blue-200 text-blue-900 rounded">
+                <p class="text-center"><%= alertMessage %></p>
             </div>
-            <% } %>
+        <% } %>
+        <h1 class="text-3xl   mt-4 text-center font-bold mb-4">Contact Us</h1>
+        <h1 class="text-md text-center  mb-4">Please provide us your contact details, So we will connect to you soon.</h1>
+        <div class="flex  justify-center">
+        <form action="/usercontact" method="POST" class="space-y-4 w-72 ">
+            <div>
+                <label for="name" class="block text-gray-700">Name:</label>
+                <input type="text" id="name" name="name" class="border rounded w-full p-2" required>
+            </div>
+
+            <div>
+                <label for="phone" class="block text-gray-700">Phone:</label>
+                <input type="tel" id="phone" name="phone" class="border rounded w-full p-2" required>
+            </div>
+            <div>
+                <label for="email" class="block text-gray-700">Email:</label>
+                <input type="email" id="email" name="email" class="border rounded w-full p-2" required>
+            </div>
+
+            <div>
+                <label for="message" class="block text-gray-700">Message:</label>
+                <textarea id="message" name="message" class="border rounded w-full p-2" rows="5" required></textarea>
+            </div>
+
+            <div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Submit
+                </button>
+            </div>
+        </form>
     </div>
+    </div>
+</div>
     <script>
         function openPopupLogin() {
             document.getElementById("popupLogin").style.display = "flex";
@@ -208,14 +219,13 @@
             showTime();
         }, 1000);
 
-        function copyToClipboard() {
-            const url = document.getElementById('shortUrl').innerText;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Shortened URL copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        }
+        setTimeout(function() {
+            const alertDiv = document.getElementById('alert');
+            if (alertDiv) {
+                alertDiv.style.opacity = '0'; // Fade out
+                setTimeout(() => alertDiv.style.display = 'none', 500); // Hide after fade out
+            }
+        }, 3000); 
 
     </script>
 </body>
