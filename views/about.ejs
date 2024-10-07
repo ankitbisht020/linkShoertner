@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         
         /* The popup background overlay */
@@ -43,9 +43,12 @@
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <!-- -- Logo or Brand Name  -->
-            <div class="text-white text-lg ">
+            <div class="  flex">
+                <img  class=" w-15 h-10 rounded-md border-2  border-zinc-600" src="https://think360studio-media.s3.ap-south-1.amazonaws.com/download/india-flag-2021-wallpaper-1.png" alt="logo!">
+            <div class="text-white text-lg ml-1 ">
                 <p  class="font-bold" id="currentdate"></p>
                 <p class="text-xs" id="currenttime"></p>
+            </div>
             </div>
     
              <!-- Links (hidden on small screens, shown on large screens) --> 
@@ -56,14 +59,23 @@
             </div>
     
             <!-- Right Section: Login/Register Buttons --> 
-            <div class="hidden md:flex space-x-4">
-                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Login
-                </button>
-                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Register
-                </button>
-            </div>
+            <% if (!decode) { %>
+                <div id='login' class="hidden md:flex space-x-4">
+                    <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Login
+                    </button>
+                    <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Register
+                    </button>
+                </div> 
+            <% } else { %>
+                <div class=" flex flex-wrap w-min justify-end">
+                    <p class="text-white "> <%= decode.email %></p>
+                    <a  href="/logout" class="bg-red-600 rounded-lg py-1 px-2 hover:bg-red-400 font-bold mt-1 ml-20">Log Out</a>
+                    
+                    
+                    </div>
+                <% } %>
     
              <!-- Mobile Menu Button (visible on small screens) --> 
             <div class="md:hidden">
@@ -104,7 +116,7 @@
         
         </div>
         </form>
-        <button onclick="openPopupRegister()" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Don't have a account</button>
+        <button onclick="openPopupRegister()" class="bg-blue-500 hover:bg-blue-400 mt-2 text-white font-bold py-2 px-4 rounded">Don't have a account</button>
     </div>
     </div>
   
@@ -157,7 +169,7 @@
 
         <h2 class="text-2xl font-semibold mb-2">Get Started</h2>
         <p class="mb-4">
-            Ready to simplify your link sharing? <a href="/shorten" class="text-blue-500 underline">Click here to shorten your first link!</a>
+            Ready to simplify your link sharing? <a href="/" class="text-blue-500 underline">Click here to shorten your first link!</a>
         </p>
 
         <footer class="mt-10">

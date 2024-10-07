@@ -10,6 +10,10 @@ const urlSchema =new mongoose.Schema({
         type:String,
         required:true
     },
+    email:{
+        type:String,
+        default:""
+    },
     visitHistory:[
         {
             type:Date,

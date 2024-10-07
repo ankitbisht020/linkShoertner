@@ -37,6 +37,23 @@
             right: 10px;
             cursor: pointer;
         }
+        .alert {
+            transition: opacity 1s ease;
+            text-align: center;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+          }
+          th {
+            background-color: #f4f4f4;
+          }
     </style>
 </head>
 <body >
@@ -44,9 +61,12 @@
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <!-- -- Logo or Brand Name  -->
-            <div class="text-white text-lg ">
+             <div class="  flex ">
+                <img  class=" w-15 h-10 rounded-md border-2  border-zinc-600" src="https://think360studio-media.s3.ap-south-1.amazonaws.com/download/india-flag-2021-wallpaper-1.png" alt="logo!">
+            <div class="text-white text-lg  ml-1">
                 <p  class="font-bold" id="currentdate"></p>
                 <p  class="text-xs" id="currenttime"></p>
+            </div>
             </div>
     
              <!-- Links (hidden on small screens, shown on large screens) --> 
@@ -57,15 +77,23 @@
             </div>
     
             <!-- Right Section: Login/Register Buttons --> 
-            <div class="hidden md:flex space-x-4">
-                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Login
-                </button>
-                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Register
-                </button>
-            </div>
-    
+            <% if (!decode) { %>
+                <div id='login' class="hidden md:flex space-x-4">
+                    <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Login
+                    </button>
+                    <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Register
+                    </button>
+                </div> 
+            <% } else { %>
+                <div class=" flex w-min  justify-end flex-wrap">
+                <p class="text-white"> <%= decode.email %></p>
+                <a  href="/logout" class="bg-red-600 rounded-lg py-1 px-2 hover:bg-red-400 font-bold mt-1 ">Log Out</a>
+                
+                
+                </div>
+            <% } %>
              <!-- Mobile Menu Button (visible on small screens) --> 
             <div class="md:hidden">
                 <button class="text-gray-300 hover:text-white focus:outline-none" id="mobile-menu-button">
@@ -92,7 +120,7 @@
         <div class="popup-content">
         <span class="close-popup" onclick="closePopupLogin()">&times;</span>
         <h2 class="text-2xl text-black mb-4">Login here..</h2>
-        <form action="/login" method="GET">
+        <form action="/login" method="POST">
         
         <label for="email" class="text-black">Email</label>
         <input class="border rounded-lg w-full p-2 mb-4" type="email" id="email" name="email" placeholder="Enter your email" required>
@@ -101,11 +129,8 @@
         <input class="border rounded-lg w-full p-2 mb-4" type="password" id="password" name="password" placeholder="Enter your password" required>
 
         <button class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded" type="submit">Login</button>
-        <div class="my-3">
-        
-        </div>
         </form>
-        <button onclick="openPopupRegister()" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Don't have a account</button>
+        <button onclick="openPopupRegister()" class="bg-blue-500 hover:bg-blue-400 mt-2 text-white font-bold py-2 px-4 rounded">Don't have a account</button>
     </div>
     </div>
   
@@ -115,6 +140,7 @@
         <span class="close-popup" onclick="closePopupRegister()">&times;</span>
         <h2 class="text-2xl text-black mb-4">Register here</h2>
         <form action="/createuser" method="POST">
+
         <label for="name" class="text-black">Name</label>
         <input class="border rounded-lg w-full p-2 mb-4" type="text" id="name" name="name" placeholder="Enter your name" required>
 
@@ -132,6 +158,11 @@
         <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"> Already have a account</button>
     </div>
     </div>
+    <% if (successMessage) { %>
+        <div id="alert" class=" bg-green-600 alert alert-success">
+            <p><%= successMessage %></p>
+        </div>
+    <% } %>
     <div class="container mx-auto p-6">
         <!-- Header -->
         <h1 class="text-4xl font-bold text-center text-gray-800 ">URL Shortener</h1>
@@ -147,6 +178,11 @@
                     Shorten URL
                 </button>
             </form>
+            <%if(decode){%>
+            <div class="text-center mt-4">
+            <button id="historybutton" class="bg-green-600 hover:bg-green-500 px-2 py-1 rounded-lg py-2 w-full text-white  " onclick="history()"> Click here to show and edit your link History</button>
+            </div>
+            <%}%>
         </div>
 
         <!-- Display Shortened URL (conditionally rendered) -->
@@ -162,11 +198,72 @@
                         Copy
                     </button>
                 </div>
-            </div>
-            <% } %>
+            </div>  
+            <%}%>  
     </div>
-   
+    
+    <div id="history" class="  flex flex-wrap hidden  justify-center item-center  mt-3">
+        <h1 class="font-bold  mb-2 text-4xl">History</h1>
+        <table class="w-full">
+            <thead >
+              <tr>
+                <th>S.NO</th>
+                <th>Shortened Link</th>
+                <th>Original Link</th>
+              </tr>
+            </thead>
+            <tbody id="table">   
+               
+            </tbody>
+          </table>
+     </div>
+     <div class="h-screen ">
+
+     </div>
     <script>
+       
+        var table="hide";
+        function history(){
+        
+        if(table=="hide"){
+           
+            table ="show";
+            fetch('/showhistory',{ method:'GET'})
+            .then(responce=>responce.json())
+            .then(data=>{ 
+             let tabledata=data.map((val,index)=>
+                 `<tr>
+                   <td class="text-xl font-bold">${index+1}</td>
+                   <td class="text-blue-500 hover:underline"><a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a></td>
+                   <td class="text-blue-500 hover:underline"><a href='${val.redirectURL}' target="_blank">${val.redirectURL}</a></td>
+                 </tr>`
+                ).join("");
+                document.getElementById("table").innerHTML= tabledata;
+                document.getElementById("historybutton").innerText ="Hide the Table";
+            });     
+            document.getElementById("history").style.display ="flex";
+        
+        }else{
+           
+            table="hide";
+            fetch('/showhistory',{ method:'GET'})
+            .then(responce=>responce.json())
+            .then(data=>{ 
+            let tabledata=data.map((val,index)=>
+                `<tr>
+                <td class="text-xl font-bold">${index+1}</td>
+                <td class="text-blue-500 hover:underline"><a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a></td>
+                <td class="text-blue-500 hover:underline"><a href='${val.redirectURL}' target="_blank">${val.redirectURL}</a></td>
+                </tr>`
+            ).join("");
+            document.getElementById("table").innerHTML= tabledata;
+                document.getElementById("historybutton").innerText ="Click here to show and edit your link History";
+            });     
+            document.getElementById("history").style.display ="none";
+        }
+    }
+    
+
         function openPopupLogin() {
             document.getElementById("popupLogin").style.display = "flex";
             document.getElementById("popupRegister").style.display = "none";
@@ -189,6 +286,7 @@
         mobileMenuButton.addEventListener('click', () => {
             if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
                 mobileMenu.style.display = 'block';
+
             } else {
                 mobileMenu.style.display = 'none';
             }
@@ -218,6 +316,13 @@
                 console.error('Failed to copy text: ', err);
             });
         }
+        setTimeout(function() {
+            const alertDiv = document.getElementById('alert');
+            if (alertDiv) {
+                alertDiv.style.opacity = '0'; // Fade out
+                setTimeout(() => alertDiv.style.display = 'none', 500); // Hide after fade out
+            }
+        }, 3000);
 
     </script>
 </body>

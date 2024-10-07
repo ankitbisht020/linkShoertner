@@ -51,9 +51,12 @@
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <!-- -- Logo or Brand Name  -->
-            <div class="text-white text-lg ">
+            <div class="  flex">
+                <img  class=" w-15 h-10 rounded-md border-2  border-zinc-600" src="https://think360studio-media.s3.ap-south-1.amazonaws.com/download/india-flag-2021-wallpaper-1.png" alt="logo!">
+            <div class="text-white text-lg ml-1 ">
                 <p  class="font-bold" id="currentdate"></p>
                 <p  class="text-xs" id="currenttime"></p>
+            </div>
             </div>
     
              <!-- Links (hidden on small screens, shown on large screens) --> 
@@ -64,14 +67,23 @@
             </div>
     
             <!-- Right Section: Login/Register Buttons --> 
-            <div class="hidden md:flex space-x-4">
-                <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Login
-                </button>
-                <button onclick="openPopupRegister()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Register
-                </button>
-            </div>
+            <% if (!decode) { %>
+                <div id='login' class="hidden md:flex space-x-4">
+                    <button onclick="openPopupLogin()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Login
+                    </button>
+                    <button onclick="openPopupRegister()" class=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Register
+                    </button>
+                </div> 
+            <% } else { %>
+                <div class=" flex flex-wrap w-min justify-end">
+                    <p class="text-white "> <%= decode.email %></p>
+                    <a  href="/logout" class="bg-red-600 rounded-lg py-1 px-2 hover:bg-red-400 font-bold mt-1 ml-20">Log Out</a>
+                    
+                    
+                    </div>
+                <% } %>
     
              <!-- Mobile Menu Button (visible on small screens) --> 
             <div class="md:hidden">
@@ -112,7 +124,7 @@
         
         </div>
         </form>
-        <button onclick="openPopupRegister()" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Don't have a account</button>
+        <button onclick="openPopupRegister()" class="bg-blue-500 hover:bg-blue-400 mt-2 text-white font-bold py-2 px-4 rounded">Don't have a account</button>
     </div>
     </div>
   
@@ -141,12 +153,12 @@
     </div>
     <div class="container mx-auto ">
         <% if (successMessage) { %>
-            <div id="alert" class=" bg-green-600 alert alert-success">
+            <div id="alert1" class=" bg-green-600 alert alert-success">
                 <p><%= successMessage %></p>
             </div>
         <% } %>
         <% if (errorMessage) { %>
-            <div  id="alert" class="alert bg-red-600 alert-danger">
+            <div  id="alert2" class="alert bg-red-600 alert-danger">
                 <p><%= errorMessage %></p>
             </div>
         <% } %>
@@ -228,13 +240,19 @@
         }, 1000);
 
         setTimeout(function() {
-            const alertDiv = document.getElementById('alert');
+            const alertDiv = document.getElementById('alert1');
             if (alertDiv) {
                 alertDiv.style.opacity = '0'; // Fade out
                 setTimeout(() => alertDiv.style.display = 'none', 500); // Hide after fade out
             }
         }, 3000); 
-
+        setTimeout(function() {
+            const alertDiv = document.getElementById('alert2');
+            if (alertDiv) {
+                alertDiv.style.opacity = '0'; // Fade out
+                setTimeout(() => alertDiv.style.display = 'none', 500); // Hide after fade out
+            }
+        }, 3000); 
     </script>
 </body>
 </html>

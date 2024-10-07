@@ -8,12 +8,13 @@ const flash =require('connect-flash');
 const path = require('path');
 const session =require('express-session');
 const usersRouter = require('./routes/url');
-const { connect } = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
+app.use(cookieParser());
 
 mongoDB();
 
@@ -31,8 +32,10 @@ app.use((req, res, next) => {
 });
 app.use(usersRouter);
 
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
 
 module.exports = app;
