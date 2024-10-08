@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
     <!-- Tailwind CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         
@@ -56,7 +57,7 @@
           }
     </style>
 </head>
-<body >
+<body  class="flex flex-col  min-h-screen">
 
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
@@ -217,9 +218,29 @@
             </tbody>
           </table>
      </div>
-     <div class="h-screen ">
-
-     </div>
+     
+     <footer class=" mt-auto ">
+   
+        <div class="  flex justify-center items-center space-x-6 ">
+            <!-- Email Link -->
+            <a href="mailto:ankitbisht9837@gmail.com" class=" my-2 flex items-center space-x-2 text-gray-700 hover:text-blue-600">
+                <img src="https://img.icons8.com/ios-filled/50/000000/email-open.png" alt="Email Logo" class="w-6 h-6">
+                <span>Email</span>
+            </a>
+        
+            <!-- LinkedIn Link -->
+            <a href="https://www.linkedin.com/in/ankitb-webd9905/" target="_blank" class=" my-2 flex items-center space-x-2 text-gray-700 hover:text-blue-600">
+                <img src="https://img.icons8.com/ios-filled/50/0077b5/linkedin.png" alt="LinkedIn Logo" class="w-6 h-6">
+                <span>LinkedIn</span>
+            </a>
+        
+            <!-- GitHub Link -->
+            <a href="https://github.com/ankitbisht020" target="_blank" class=" my-2 flex items-center space-x-2 text-gray-700 hover:text-blue-600">
+                <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub Logo" class="w-6 h-6">
+                <span>GitHub</span>
+            </a>
+        </div>
+        </footer>
     <script>
        
         var table="hide";
@@ -235,11 +256,12 @@
                  `<tr>
                    <td class="text-xl font-bold">${index+1}</td>
                    <td class="text-blue-500 hover:underline"><a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a></td>
-                   <td class="text-blue-500 hover:underline"><a href='${val.redirectURL}' target="_blank">${val.redirectURL}</a></td>
+                   <td ><a  class=" text-blue-500 hover:underline" href='${val.redirectURL}' target="_blank">${val.redirectURL}</a><a class="bg-red-500 hover:bg-red-700 ml-10 fas fa-trash-alt p-1 rounded-lg" href="/delete/${val._id}"></a></td>
                  </tr>`
                 ).join("");
                 document.getElementById("table").innerHTML= tabledata;
                 document.getElementById("historybutton").innerText ="Hide the Table";
+                
             });     
             document.getElementById("history").style.display ="flex";
         
@@ -253,7 +275,7 @@
                 `<tr>
                 <td class="text-xl font-bold">${index+1}</td>
                 <td class="text-blue-500 hover:underline"><a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a></td>
-                <td class="text-blue-500 hover:underline"><a href='${val.redirectURL}' target="_blank">${val.redirectURL}</a></td>
+                <td><a class="text-blue-500 hover:underline" href='${val.redirectURL}' target="_blank">${val.redirectURL}</a><a class="bg-red-500 hover:bg-red-700 ml-10 fas fa-trash-alt p-1 rounded-lg" href="/delete/${val._id}"></a></td>
                 </tr>`
             ).join("");
             document.getElementById("table").innerHTML= tabledata;

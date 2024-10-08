@@ -54,3 +54,10 @@ exports.logout = async(req,res)=>{
     res.cookie('token',"");
     res.redirect('/');
 }
+
+exports.delete =async(req,res)=>{
+    let id= req.params.id;
+     await urlmodel.findOneAndDelete({_id:id});
+     res.redirect('/');
+
+}

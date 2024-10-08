@@ -13,4 +13,5 @@ router.post('/createuser',create.createuser);
 router.get('/logout',create.logout)
 router.post('/login',create.login);
 router.get('/showhistory', url.showhistory)
+router.get('/delete/:id', create.delete)
 module.exports = router;
