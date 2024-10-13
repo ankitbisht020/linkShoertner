@@ -6,7 +6,8 @@ Welcome to the Link Shortener app! This web application allows users to shorten 
 
 ## Features ✨
 
-- JWT Authentication: Secure authentication using JSON Web Tokens (JWT). Only registered users can shorten URLs, view history, and manage their accounts.
+
+- JWT Authentication:  Secure authentication using JSON Web Tokens (JWT). Only registered users can shorten URLs, view history, and manage their accounts.
 - Shorten URLs: Instantly shorten any URL for easier sharing.
 - User History: After logging in, users can view their personal URL shortening history, edit or delete entries.
 - Delete History: Delete any or all URLs from your shortening history.

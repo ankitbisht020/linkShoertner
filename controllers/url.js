@@ -43,19 +43,19 @@ exports.shorten= async (req, res) => {
     let Url =await urlmodel.findOne({redirectURL:originalurl});
 
     if(!decode){
-        if(Url){
-            const shortUrlCode=Url.shortId;
-            const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;   
-            res.render('index', {shortenedUrl,shortUrlCode, decode});
-        }else{
-            const shortUrlCode = shortid.generate();
-            await urlmodel.create({
-                shortId:shortUrlCode,
-                redirectURL:originalurl
-            });
-            const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;
-            res.render('index', {shortenedUrl,shortUrlCode, decode});
-        }
+    if(!Url){
+        const shortUrlCode=Url.shortId;
+        const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;   
+        res.render('index', {shortenedUrl,shortUrlCode, decode});
+    }else{
+        const shortUrlCode = shortid.generate();
+        await urlmodel.create({
+            shortId:shortUrlCode,
+            redirectURL:originalurl
+        });
+        const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;
+        res.render('index', {shortenedUrl,shortUrlCode, decode});
+    }
     }else{
         
         let email=decode.email;
