@@ -48,7 +48,7 @@
 </head>
 <body class=" flex flex-col  min-h-screen">
     
-    <nav class="bg-gray-800 p-3 w-full">
+    <nav class="bg-gray-800 p-4 w-full">
         <div class="container mx-auto flex justify-between items-center">
             <!-- -- Logo or Brand Name  -->
             <div class="  flex">
@@ -195,7 +195,7 @@
     </div>
     </div>
 
-<footer class="h-12 mt-5 ">
+<footer class="mt-auto ">
    
 <div class="  flex justify-center items-center space-x-6 ">
     <!-- Email Link -->
@@ -252,8 +252,8 @@
                 timeStyle: 'medium',
                 dateStyle: 'medium',
             }).format(date);
-            const currentdate =timeinidia.slice(0,11);
-            const currentime =timeinidia.slice(12,24);
+            const currentdate =timeinidia.slice(0,12);
+            const currentime =timeinidia.slice(13,24);
             document.getElementById('currentdate').innerHTML = currentdate;
             document.getElementById('currenttime').innerHTML = currentime;
         }

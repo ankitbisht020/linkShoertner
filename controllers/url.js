@@ -1,4 +1,5 @@
 const shortid = require('shortid'); // For generating short URL codes
+const crypto = require('crypto');
 const urlmodel = require('../models/urlmodel');
 const contact = require('../models/servicesupport');
 const jwt = require('jsonwebtoken');
@@ -42,19 +43,19 @@ exports.shorten= async (req, res) => {
     let Url =await urlmodel.findOne({redirectURL:originalurl});
 
     if(!decode){
-    if(!Url){
-        const shortUrlCode=Url.shortId;
-        const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;   
-        res.render('index', {shortenedUrl,shortUrlCode, decode});
-    }else{
-        const shortUrlCode = shortid.generate();
-        await urlmodel.create({
-            shortId:shortUrlCode,
-            redirectURL:originalurl
-        });
-        const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;
-        res.render('index', {shortenedUrl,shortUrlCode, decode});
-    }
+        if(Url){
+            const shortUrlCode=Url.shortId;
+            const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;   
+            res.render('index', {shortenedUrl,shortUrlCode, decode});
+        }else{
+            const shortUrlCode = shortid.generate();
+            await urlmodel.create({
+                shortId:shortUrlCode,
+                redirectURL:originalurl
+            });
+            const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;
+            res.render('index', {shortenedUrl,shortUrlCode, decode});
+        }
     }else{
         
         let email=decode.email;
@@ -66,20 +67,20 @@ exports.shorten= async (req, res) => {
             // console.log(email);
             let url = await urlmodel.findOne({redirectURL:originalurl,email});
             if(!url){
-            const shortUrlCode = shortid.generate();
-            await urlmodel.create({
-                shortId:shortUrlCode,
-                redirectURL:originalurl,
-                email
-            });
-            const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;
-            res.render('index', {shortenedUrl,shortUrlCode, decode});
-        }else{
-            // console.log(email);
-            const shortUrlCode=url.shortId;
-            const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;   
-            res.render('index', {shortenedUrl,shortUrlCode, decode});
-        }
+                const shortUrlCode = shortid.generate();
+                await urlmodel.create({
+                    shortId:shortUrlCode,
+                    redirectURL:originalurl,
+                    email
+                });
+                const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;
+                res.render('index', {shortenedUrl,shortUrlCode, decode});
+            }else{
+                // console.log(email);
+                const shortUrlCode=url.shortId;
+                const shortenedUrl = `${req.protocol}://${req.get('host')}/${shortUrlCode}`;   
+                res.render('index', {shortenedUrl,shortUrlCode, decode});
+            }
         }
     }
 }

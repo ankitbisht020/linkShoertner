@@ -176,7 +176,7 @@
             <p class="text-sm text-gray-600">© 2024 Link Shortener. All rights reserved.</p>
         </footer>
     </div>
-    <footer class=" h-12 mt-5 ">
+    <footer class=" mt-auto ">
    
         <div class="  flex justify-center items-center space-x-6 ">
             <!-- Email Link -->
@@ -232,8 +232,8 @@
                 timeStyle: 'medium',
                 dateStyle: 'medium',
             }).format(date);
-            const currentdate =timeinidia.slice(0,11);
-            const currentime =timeinidia.slice(12,24);
+            const currentdate =timeinidia.slice(0,12);
+            const currentime =timeinidia.slice(13,24);
             document.getElementById('currentdate').innerHTML = currentdate;
             document.getElementById('currenttime').innerHTML = currentime;
         }
