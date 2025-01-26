@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const mongoDB = require('./mongoose.connecton');
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3010; 
 const express = require('express');
 const app = express();
 const flash =require('connect-flash');

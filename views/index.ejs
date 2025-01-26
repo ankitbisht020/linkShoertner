@@ -192,7 +192,7 @@
             <div class="mt-10 text-center">
                 <p class="text-xl text-gray-800">Shortened URL:</p>
                 <div class="flex justify-center items-center mt-3">
-                    <a id="shortUrl" href="/goto/<%=shortUrlCode%>"  target="_blank" class="text-indigo-600 text-xl font-bold hover:underline">
+                    <a id="shortUrl" href="<%=shortenedUrl%>"  target="_blank" class="text-indigo-600 text-xl font-bold hover:underline">
                         <%= shortenedUrl%>
                     </a>
                     <!-- Copy Button -->
@@ -244,47 +244,39 @@
         </footer>
     <script>
        
-        var table="hide";
-        function history(){
-        
-        if(table=="hide"){
-           
-            table ="show";
-            fetch('/showhistory',{ method:'GET'})
-            .then(responce=>responce.json())
-            .then(data=>{ 
-             let tabledata=data.map((val,index)=>
-                 `<tr>
-                   <td class="text-xl font-bold">${index+1}</td>
-                   <td class="text-blue-500 hover:underline"><a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a></td>
-                   <td ><a  class=" text-blue-500 hover:underline" href='${val.redirectURL}' target="_blank">${val.redirectURL}</a><a class="bg-red-500 hover:bg-red-700 ml-10 fas fa-trash-alt p-1 rounded-lg" href="/delete/${val._id}"></a></td>
-                 </tr>`
+    var table="hide";
+    function history() {
+    const historyButton = document.getElementById("historybutton");
+    const historyTable = document.getElementById("history");
+
+    if (table === "hide") {
+        table = "show";
+        fetch('/showhistory', { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                const tableData = data.map((val, index) =>
+                    `<tr>
+                        <td class="text-xl font-bold">${index + 1}</td>
+                        <td class="text-blue-500 hover:underline">
+                            <a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a>
+                        </td>
+                        <td>
+                            <a class="text-blue-500 hover:underline" href='${val.redirectURL}' target="_blank">${val.redirectURL}</a>
+                            <a class="bg-red-500 hover:bg-red-700 ml-10 fas fa-trash-alt p-1 rounded-lg" href="/delete/${val._id}"></a>
+                        </td>
+                    </tr>`
                 ).join("");
-                document.getElementById("table").innerHTML= tabledata;
-                document.getElementById("historybutton").innerText ="Hide the Table";
-                
-            });     
-            document.getElementById("history").style.display ="flex";
-        
-        }else{
-           
-            table="hide";
-            fetch('/showhistory',{ method:'GET'})
-            .then(responce=>responce.json())
-            .then(data=>{ 
-            let tabledata=data.map((val,index)=>
-                `<tr>
-                <td class="text-xl font-bold">${index+1}</td>
-                <td class="text-blue-500 hover:underline"><a href='/goto/${val.shortId}' target="_blank">${val.shortId}</a></td>
-                <td><a class="text-blue-500 hover:underline" href='${val.redirectURL}' target="_blank">${val.redirectURL}</a><a class="bg-red-500 hover:bg-red-700 ml-10 fas fa-trash-alt p-1 rounded-lg" href="/delete/${val._id}"></a></td>
-                </tr>`
-            ).join("");
-            document.getElementById("table").innerHTML= tabledata;
-                document.getElementById("historybutton").innerText ="Click here to show and edit your link History";
-            });     
-            document.getElementById("history").style.display ="none";
-        }
+                document.getElementById("table").innerHTML = tableData;
+                historyButton.innerText = "Hide the Table";
+                historyTable.style.display = "flex";
+            });
+    } else {
+        table = "hide";
+        historyButton.innerText = "Click here to show and edit your link History";
+        historyTable.style.display = "none";
     }
+}
+
     
 
         function openPopupLogin() {

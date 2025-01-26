@@ -26,7 +26,6 @@ exports.homepage = async (req, res) => {
     res.render('index', { shortenedUrl: null, decode });
 };
 exports.shorten= async (req, res) => {
-    let originalUrl= req.body.url;
     let decode = null;
     
     // Check if the token exists in cookies
@@ -34,40 +33,57 @@ exports.shorten= async (req, res) => {
         try {
             // Verify JWT token
             decode = jwt.verify(req.cookies.token, process.env.SECRET_KEY);
-            // console.log(decode); 
+            // console.log(decode); // Optional: Log the decoded user info
         } catch (err) {
             console.error('JWT verification failed:', err);
             // You can choose to redirect or just log the error
         }
     }
-    try {
-        let existingUrl = await urlmodel.findOne({ redirectURL: originalUrl });
-
-        if (existingUrl) {
-            const shortenedUrl = `${req.protocol}://${req.get('host')}/${existingUrl.shortId}`;
-            return res.render('index', { shortenedUrl, decode });
-        }
-
+    let originalurl= req.body.url;
+    let Url =await urlmodel.findOne({redirectURL:originalurl});
+    
+    if(!decode){
+    if(!Url){
+        const shortUrlCode=Url.shortId;
+        const shortenedUrl = ${req.protocol}://${req.get('host')}/${shortUrlCode};   
+        res.render('index', {shortenedUrl,shortUrlCode, decode});
+    }else{
         const shortUrlCode = shortid.generate();
-        const newUrlData = {
-            shortId: shortUrlCode,
-            redirectURL: originalUrl,
-        };
-
-        if (decode) {
-            newUrlData.email = decode.email;
-        }
-
-        await urlmodel.create(newUrlData);
-
-        const shortenedUrl = `${req.get('host')}/${shortUrlCode}`;
-        res.render('index', { shortenedUrl, decode });
-    } catch (error) {
-        console.error('Error creating shortened URL:', error);
-        res.status(500).send('An error occurred while shortening the URL.');
+        await urlmodel.create({
+            shortId:shortUrlCode,
+            redirectURL:originalurl
+        });
+        const shortenedUrl = ${req.protocol}://${req.get('host')}/${shortUrlCode};
+        res.render('index', {shortenedUrl,shortUrlCode, decode});
     }
-};
-
+    }else{
+        
+        let email=decode.email;
+        if(email==Url.email){
+            const shortUrlCode=Url.shortId;
+            const shortenedUrl = ${req.protocol}://${req.get('host')}/${shortUrlCode};   
+            res.render('index', {shortenedUrl,shortUrlCode, decode});
+        }else{
+            // console.log(email);
+            let url = await urlmodel.findOne({redirectURL:originalurl,email});
+            if(!url){
+                const shortUrlCode = shortid.generate();
+                await urlmodel.create({
+                    shortId:shortUrlCode,
+                    redirectURL:originalurl,
+                    email
+                });
+                const shortenedUrl = ${req.protocol}://${req.get('host')}/${shortUrlCode};
+                res.render('index', {shortenedUrl,shortUrlCode, decode});
+            }else{
+                // console.log(email);
+                const shortUrlCode=url.shortId;
+                const shortenedUrl = ${req.protocol}://${req.get('host')}/${shortUrlCode};   
+                res.render('index', {shortenedUrl,shortUrlCode, decode});
+            }
+        }
+    }
+}
  
 
 exports.redirectolink =async (req, res) => {
@@ -167,13 +183,9 @@ exports.about = (req,res)=>{
 }
 
 exports.showhistory= async(req,res)=>{
-    console.log(req.email)
    let  decode = jwt.verify(req.cookies.token, process.env.SECRET_KEY);   
    let email = decode.email;
    let data = await urlmodel.find({email})
    res.json(data);
     
 }
-
-
-
