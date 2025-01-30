@@ -12,6 +12,12 @@
       "dest": "index.js"
     }
   ],
+  "functions": {
+    "index.js": {
+      "includeFiles": ["models/**"]
+    }
+  }
+},
   "ignoreCommand": "echo 'Ignoring nothing'",  
   "functions": {
     "index.js": {
